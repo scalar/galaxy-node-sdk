@@ -1,9 +1,6 @@
 name: TypeScript SDK Release
 
 on:
-  push:
-    branches:
-      - main
   release:
     types: [published]
   workflow_dispatch:
