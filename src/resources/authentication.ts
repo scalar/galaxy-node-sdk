@@ -1,0 +1,106 @@
+// File generated from our OpenAPI spec by Scalar. See README.md for details.
+
+import { APIResource } from "../resource";
+import { APIPromise } from "../api-promise";
+import type { RequestOptions } from "../internal/request-options";
+
+export class Authentication extends APIResource {
+  /**
+   * Time to create a user account, eh?
+   *
+   * @param {AuthenticationCreateUserParams} [body] - The request body to send.
+   * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
+   * @returns {APIPromise<User>} Created
+   *
+   * @example
+   * ```ts
+   * const user = await client.authentication.createUser();
+   * ```
+   */
+  createUser(body: AuthenticationCreateUserParams | null | undefined = undefined, options?: RequestOptions): APIPromise<User> {
+    return this._client.post("/user/signup", { body: body, ...options });
+  }
+
+  /**
+   * Yeah, this is the boring security stuff. Just get your super secret token and move on.
+   *
+   * @param {AuthenticationCreateTokenParams} [body] - The request body to send.
+   * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
+   * @returns {APIPromise<AuthenticationCreateTokenResponse>} Token Created
+   *
+   * @example
+   * ```ts
+   * const createToken = await client.authentication.createToken();
+   * ```
+   */
+  createToken(body: AuthenticationCreateTokenParams | null | undefined = undefined, options?: RequestOptions): APIPromise<AuthenticationCreateTokenResponse> {
+    return this._client.post("/auth/token", { body: body, ...options });
+  }
+
+  /**
+   * Find yourself they say. That's what you can do here.
+   *
+   * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
+   * @returns {APIPromise<User>} OK
+   *
+   * @example
+   * ```ts
+   * const user = await client.authentication.listMe();
+   * ```
+   */
+  listMe(options?: RequestOptions): APIPromise<User> {
+    return this._client.get("/me", options);
+  }
+}
+
+/**
+ * A user
+ */
+export interface User {
+  /**
+   * @format int64
+   */
+  id?: number;
+  name?: string;
+}
+
+/**
+ * Credentials to authenticate a user
+ */
+export interface Credentials {
+  /**
+   * @format email
+   */
+  email: string;
+}
+
+export interface AuthenticationCreateUserParams {
+  /**
+   * @format email
+   */
+  email: string;
+  password: string;
+  name?: string;
+}
+
+export interface AuthenticationCreateTokenParams {
+  /**
+   * @format email
+   */
+  email: string;
+  password: string;
+}
+
+export interface AuthenticationCreateTokenResponse {
+  token?: string;
+}
+export declare namespace Authentication {
+  export {
+    type User as User,
+    type Credentials as Credentials,
+    type AuthenticationCreateTokenResponse as AuthenticationCreateTokenResponse,
+    type AuthenticationCreateUserParams as AuthenticationCreateUserParams,
+    type AuthenticationCreateTokenParams as AuthenticationCreateTokenParams,
+  };
+}
+export { Authentication as AuthenticationResource };
